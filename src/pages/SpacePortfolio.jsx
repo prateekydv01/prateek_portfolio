@@ -5,6 +5,22 @@ const SpacePortfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Contact form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const [formStatus, setFormStatus] = useState({
+    isSubmitting: false,
+    isSubmitted: false,
+    error: null
+  });
+
+  const [formErrors, setFormErrors] = useState({});
+
   // Enhanced stars animation effect with reduced opacity
   const generateStars = () => {
     const stars = [];
@@ -56,6 +72,94 @@ const SpacePortfolio = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
+
+  // Contact form handlers
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Email is invalid';
+    }
+    
+    if (!formData.subject.trim()) {
+      errors.subject = 'Subject is required';
+    }
+    
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    } 
+    
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  const errors = validateForm();
+  if (Object.keys(errors).length > 0) {
+    setFormErrors(errors);
+    return;
+  }
+
+  setFormStatus({ isSubmitting: true, isSubmitted: false, error: null });
+
+  try {
+    const formDataToSend = new FormData();
+    formDataToSend.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY); 
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("subject", formData.subject);
+    formDataToSend.append("message", formData.message);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formDataToSend
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      setFormStatus({ isSubmitting: false, isSubmitted: true, error: null });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      setTimeout(() => {
+        setFormStatus(prev => ({ ...prev, isSubmitted: false }));
+      }, 5000);
+    } else {
+      throw new Error('Submission failed');
+    }
+    
+  } catch (error) {
+    setFormStatus({ 
+      isSubmitting: false, 
+      isSubmitted: false, 
+      error: 'Failed to send message. Please try again.' 
+    });
+  }
+};
+
 
   const projects = [
     {
@@ -285,19 +389,22 @@ const SpacePortfolio = () => {
             {/* Social Links */}
             <div className="flex justify-center space-x-6 mb-12">
               <a
-                href="#"
+                href="https://www.linkedin.com/in/prateek-yadav-b0b278310/"
+                target='_blank'
                 className="p-3 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-110"
               >
                 <Linkedin size={24} />
               </a>
               <a
-                href="#"
+                href="https://github.com/prateekydv01"
+                target='_blank'
                 className="p-3 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 transition-all duration-300 transform hover:scale-110"
               >
                 <Github size={24} />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/prateekydv__/"
+                target='_blank'
                 className="p-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-110"
               >
                 <Instagram size={24} />
@@ -409,7 +516,7 @@ const SpacePortfolio = () => {
           </div>
         </section>
 
-        {/* Contact Section - Adjusted text colors */}
+        {/* Contact Section - WORKING FORM */}
         <section id="contact" className="min-h-screen py-20 px-6">
           <div className="container mx-auto max-w-6xl">
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
@@ -417,47 +524,105 @@ const SpacePortfolio = () => {
             </h2>
             
             <div className="grid md:grid-cols-2 gap-12">
-              {/* Contact Form - Improved form colors */}
+              {/* Working Contact Form */}
               <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-8">
-                <div className="space-y-6">
+                {/* Success Message */}
+                {formStatus.isSubmitted && (
+                  <div className="mb-6 p-4 bg-green-600/20 border border-green-400/30 rounded-lg">
+                    <p className="text-green-400 text-center">✨ Message sent successfully! I'll get back to you soon.</p>
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {formStatus.error && (
+                  <div className="mb-6 p-4 bg-red-600/20 border border-red-400/30 rounded-lg">
+                    <p className="text-red-400 text-center">{formStatus.error}</p>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-200">Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:border-violet-400 transition-colors text-gray-100 placeholder-gray-400"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none transition-colors text-gray-100 placeholder-gray-400 ${
+                        formErrors.name ? 'border-red-400 focus:border-red-400' : 'border-gray-600 focus:border-violet-400'
+                      }`}
                       placeholder="Your Name"
                     />
+                    {formErrors.name && <p className="text-red-400 text-sm mt-1">{formErrors.name}</p>}
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-200">Email</label>
                     <input
                       type="email"
-                      className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:border-violet-400 transition-colors text-gray-100 placeholder-gray-400"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none transition-colors text-gray-100 placeholder-gray-400 ${
+                        formErrors.email ? 'border-red-400 focus:border-red-400' : 'border-gray-600 focus:border-violet-400'
+                      }`}
                       placeholder="your.email@example.com"
                     />
+                    {formErrors.email && <p className="text-red-400 text-sm mt-1">{formErrors.email}</p>}
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-200">Subject</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:border-violet-400 transition-colors text-gray-100 placeholder-gray-400"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none transition-colors text-gray-100 placeholder-gray-400 ${
+                        formErrors.subject ? 'border-red-400 focus:border-red-400' : 'border-gray-600 focus:border-violet-400'
+                      }`}
                       placeholder="Subject"
                     />
+                    {formErrors.subject && <p className="text-red-400 text-sm mt-1">{formErrors.subject}</p>}
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-2 text-gray-200">Message</label>
                     <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       rows={5}
-                      className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:border-violet-400 transition-colors resize-none text-gray-100 placeholder-gray-400"
+                      className={`w-full px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none transition-colors resize-none text-gray-100 placeholder-gray-400 ${
+                        formErrors.message ? 'border-red-400 focus:border-red-400' : 'border-gray-600 focus:border-violet-400'
+                      }`}
                       placeholder="Your message..."
-                    ></textarea>
+                    />
+                    {formErrors.message && <p className="text-red-400 text-sm mt-1">{formErrors.message}</p>}
                   </div>
+
                   <button
-                    className="w-full py-3 bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 rounded-lg transition-all duration-300 font-medium text-white"
+                    type="submit"
+                    disabled={formStatus.isSubmitting}
+                    className={`w-full py-3 rounded-lg transition-all duration-300 font-medium text-white ${
+                      formStatus.isSubmitting
+                        ? 'bg-gray-600 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700'
+                    }`}
                   >
-                    Send Message
+                    {formStatus.isSubmitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Sending...
+                      </span>
+                    ) : (
+                      '🚀 Send Message'
+                    )}
                   </button>
-                </div>
+                </form>
               </div>
 
               {/* Contact Info - Adjusted text colors */}
@@ -467,15 +632,15 @@ const SpacePortfolio = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
                       <Phone className="text-violet-400" size={20} />
-                      <span className="text-gray-200">+91 12345 67890</span>
+                      <span className="text-gray-200"><a href="tel:+917988365150">+91 7988365150</a></span>
                     </div>
                     <div className="flex items-center gap-4">
                       <Mail className="text-violet-400" size={20} />
-                      <span className="text-gray-200">your.email@example.com</span>
+                      <span className="text-gray-200"><a href="mailto:prateekyadav2023@gmail.com">prateekyadav2023@gmail.com</a></span>
                     </div>
                     <div className="flex items-center gap-4">
                       <MapPin className="text-violet-400" size={20} />
-                      <span className="text-gray-200">Your City, Country</span>
+                      <span className="text-gray-200">Rewari, Haryana</span>
                     </div>
                   </div>
                 </div>
@@ -484,19 +649,22 @@ const SpacePortfolio = () => {
                   <h3 className="text-xl font-semibold mb-6 text-gray-100">Connect with Me</h3>
                   <div className="flex gap-4">
                     <a
-                      href="#"
+                      href="https://www.linkedin.com/in/prateek-yadav-b0b278310/"
+                      target='_blank'
                       className="p-3 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-110"
                     >
                       <Linkedin size={20} />
                     </a>
                     <a
-                      href="#"
+                      href="https://github.com/prateekydv01"
+                      target='_blank'
                       className="p-3 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 transition-all duration-300 transform hover:scale-110"
-                    >
+                      >
                       <Github size={20} />
                     </a>
                     <a
-                      href="#"
+                      href="https://www.instagram.com/prateekydv__/"
+                      target='_blank'
                       className="p-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-110"
                     >
                       <Instagram size={20} />
