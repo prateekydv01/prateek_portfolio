@@ -254,14 +254,14 @@ const SpacePortfolio = () => {
           <div className="text-center px-6 max-w-5xl mx-auto">
             <div className="mb-10">
               <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-                Welcome to My Universe
+                Welcome to Prateek's Universe
               </h1>
               <div className="space-y-4 mb-8">
                 <p className="text-xl md:text-2xl text-gray-200">
                   Exploring the infinite possibilities of code and creativity
                 </p>
                 <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                  Crafting digital experiences with modern web technologies, passionate about creating innovative solutions in the MERN stack ecosystem
+                  Crafting digital experiences with modern web technologies, passionate about creating innovative solutions in the  full stack development ecosystem
                 </p>
               </div>
               
