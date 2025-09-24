@@ -4,6 +4,7 @@ import { Github, Linkedin, Instagram, Mail, Phone, MapPin, ExternalLink, Code, C
 const SpacePortfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
 
   // Contact form state
   const [formData, setFormData] = useState({
@@ -20,6 +21,20 @@ const SpacePortfolio = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
+
+  // Image error handler
+  const handleImageError = (projectId) => {
+    setImageErrors(prev => ({ ...prev, [projectId]: true }));
+  };
+
+  // Helper function to check if demo link is valid
+  const isValidDemoLink = (demoUrl) => {
+    return demoUrl && 
+           demoUrl.trim() !== '' && 
+           demoUrl !== '#' && 
+           demoUrl.toLowerCase() !== 'none' &&
+           demoUrl.startsWith('http');
+  };
 
   // Enhanced stars animation effect with reduced opacity
   const generateStars = () => {
@@ -62,8 +77,7 @@ const SpacePortfolio = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Call once to set initial state
-
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -81,7 +95,6 @@ const SpacePortfolio = () => {
       [name]: value
     }));
     
-    // Clear error for this field when user starts typing
     if (formErrors[name]) {
       setFormErrors(prev => ({
         ...prev,
@@ -115,92 +128,87 @@ const SpacePortfolio = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  const errors = validateForm();
-  if (Object.keys(errors).length > 0) {
-    setFormErrors(errors);
-    return;
-  }
-
-  setFormStatus({ isSubmitting: true, isSubmitted: false, error: null });
-
-  try {
-    const formDataToSend = new FormData();
-    formDataToSend.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY); 
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("subject", formData.subject);
-    formDataToSend.append("message", formData.message);
-
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formDataToSend
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      setFormStatus({ isSubmitting: false, isSubmitted: true, error: null });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      setTimeout(() => {
-        setFormStatus(prev => ({ ...prev, isSubmitted: false }));
-      }, 5000);
-    } else {
-      throw new Error('Submission failed');
-    }
+    e.preventDefault();
     
-  } catch (error) {
-    setFormStatus({ 
-      isSubmitting: false, 
-      isSubmitted: false, 
-      error: 'Failed to send message. Please try again.' 
-    });
-  }
-};
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
 
+    setFormStatus({ isSubmitting: true, isSubmitted: false, error: null });
 
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY); 
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("subject", formData.subject);
+      formDataToSend.append("message", formData.message);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormStatus({ isSubmitting: false, isSubmitted: true, error: null });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        
+        setTimeout(() => {
+          setFormStatus(prev => ({ ...prev, isSubmitted: false }));
+        }, 5000);
+      } else {
+        throw new Error('Submission failed');
+      }
+      
+    } catch (error) {
+      setFormStatus({ 
+        isSubmitting: false, 
+        isSubmitted: false, 
+        error: 'Failed to send message. Please try again.' 
+      });
+    }
+  };
+
+  // Updated projects with conditional demo links
   const projects = [
     {
-      id: 1,
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce platform with user authentication, shopping cart, and payment integration.",
-      image: "/api/placeholder/300/200",
-      skills: ["React", "Node.js", "MongoDB", "Express"],
-      github: "#",
-      demo: "#"
-    },
-    {
       id: 2,
-      title: "Social Media Dashboard",
-      description: "Real-time social media analytics dashboard with data visualization and user engagement metrics.",
-      image: "/api/placeholder/300/200",
-      skills: ["React", "Python", "Tailwind", "MongoDB"],
-      github: "#",
-      demo: "#"
+      title: "Smart India Hackathon Project",
+      description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
+      image: "/janconnect.png",
+      imageAlt: "Smart India Hackathon civic complaint management system",
+      skills: ["MERN Stack", "Google Maps API", "3d-Models", ""],
+      github: "hhttps://github.com/JanConnect/",
+      demo: null // No demo link available - button will be hidden
+    },
+    
+    {
+      id: 1,
+      title: "Blog Posting Platform",
+      description: "Developed a blog posting web application using the MERN stack with full CRUD functionality. Implemented features to create, update, and manage posts with active/inactive status for better content control",
+      image: "/blogsite.png",
+      imageAlt: "Blog posting platform screenshot showing the main interface",
+      skills: ["React", "Node.js", "MongoDB", "Express"],
+      github: "https://github.com/prateekydv01/blogsite",
+      demo: "https://blogsite-frontend-9wke.vercel.app/" // Valid demo link
     },
     {
       id: 3,
-      title: "Task Management App",
-      description: "Collaborative task management application with drag-and-drop functionality and team collaboration.",
-      image: "/api/placeholder/300/200",
-      skills: ["React", "Express", "Node.js", "Git"],
-      github: "#",
-      demo: "#"
+      title: "8 Mini JS projects",
+      description: "Built 8 projects with HTML, CSS & JavaScript to strengthen DOM manipulation and JavaScript fundamentals, including calculator, todo app, weather app, cart, banner, tracker, text counter, and food order",
+      image: "/images/projects/bl",
+      imageAlt: "Blog posting platform screenshot showing the main interface",
+      skills: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/prateekydv01/mini-javascript-projects",
     },
-    {
-      id: 4,
-      title: "Weather Forecast App",
-      description: "Weather application with location-based forecasts, interactive maps, and weather alerts.",
-      image: "/api/placeholder/300/200",
-      skills: ["React", "Python", "Tailwind", "GitHub"],
-      github: "#",
-      demo: "#"
-    }
+    
+    
   ];
 
-  // Updated skills with JavaScript added
   const skills = [
     "React", "Node.js", "Express.js", "MongoDB", 
     "JavaScript", "Tailwind CSS", "Git & GitHub", "Python", "C++"
@@ -391,6 +399,7 @@ const SpacePortfolio = () => {
               <a
                 href="https://www.linkedin.com/in/prateek-yadav-b0b278310/"
                 target='_blank'
+                rel="noopener noreferrer"
                 className="p-3 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-110"
               >
                 <Linkedin size={24} />
@@ -398,6 +407,7 @@ const SpacePortfolio = () => {
               <a
                 href="https://github.com/prateekydv01"
                 target='_blank'
+                rel="noopener noreferrer"
                 className="p-3 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 transition-all duration-300 transform hover:scale-110"
               >
                 <Github size={24} />
@@ -405,6 +415,7 @@ const SpacePortfolio = () => {
               <a
                 href="https://www.instagram.com/prateekydv__/"
                 target='_blank'
+                rel="noopener noreferrer"
                 className="p-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-110"
               >
                 <Instagram size={24} />
@@ -462,7 +473,7 @@ const SpacePortfolio = () => {
           </div>
         </section>
 
-        {/* Projects Section - Adjusted text colors */}
+        {/* Projects Section - Updated with conditional demo button rendering */}
         <section id="projects" className="min-h-screen py-20 px-6">
           <div className="container mx-auto max-w-7xl">
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
@@ -475,9 +486,21 @@ const SpacePortfolio = () => {
                   key={project.id}
                   className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden transition-all duration-300 hover:scale-105 hover:border-violet-400/50"
                 >
-                  <div className="h-48 bg-gradient-to-br from-violet-600/20 to-pink-600/20 flex items-center justify-center">
-                    <div className="text-6xl opacity-30">🚀</div>
+                  {/* Image Container with Fallback */}
+                  <div className="h-48 bg-gradient-to-br from-violet-600/20 to-pink-600/20 flex items-center justify-center overflow-hidden">
+                    {!imageErrors[project.id] ? (
+                      <img
+                        src={project.image}
+                        alt={project.imageAlt}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                        onError={() => handleImageError(project.id)}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="text-6xl opacity-30">🚀</div>
+                    )}
                   </div>
+                  
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-3 text-gray-100">{project.title}</h3>
                     <p className="text-gray-200 mb-4">{project.description}</p>
@@ -493,21 +516,33 @@ const SpacePortfolio = () => {
                       ))}
                     </div>
                     
+                    {/* Conditional Button Rendering */}
                     <div className="flex gap-4">
-                      <a
-                        href={project.github}
-                        className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors text-gray-100"
-                      >
-                        <Code size={16} />
-                        Code
-                      </a>
-                      <a
-                        href={project.demo}
-                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 rounded-lg transition-all text-white"
-                      >
-                        <ExternalLink size={16} />
-                        Demo
-                      </a>
+                      {/* GitHub button - always show if github link exists */}
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target='_blank'
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors text-gray-100"
+                        >
+                          <Code size={16} />
+                          Code
+                        </a>
+                      )}
+                      
+                      {/* Demo button - only show if valid demo link exists */}
+                      {isValidDemoLink(project.demo) && (
+                        <a
+                          href={project.demo}
+                          target='_blank'
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 rounded-lg transition-all text-white"
+                        >
+                          <ExternalLink size={16} />
+                          Demo
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -651,6 +686,7 @@ const SpacePortfolio = () => {
                     <a
                       href="https://www.linkedin.com/in/prateek-yadav-b0b278310/"
                       target='_blank'
+                      rel="noopener noreferrer"
                       className="p-3 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-110"
                     >
                       <Linkedin size={20} />
@@ -658,13 +694,15 @@ const SpacePortfolio = () => {
                     <a
                       href="https://github.com/prateekydv01"
                       target='_blank'
+                      rel="noopener noreferrer"
                       className="p-3 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 transition-all duration-300 transform hover:scale-110"
-                      >
+                    >
                       <Github size={20} />
                     </a>
                     <a
                       href="https://www.instagram.com/prateekydv__/"
                       target='_blank'
+                      rel="noopener noreferrer"
                       className="p-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-110"
                     >
                       <Instagram size={20} />
@@ -681,7 +719,7 @@ const SpacePortfolio = () => {
       <footer className="relative z-10 bg-black/90 backdrop-blur-md border-t border-gray-700/50 py-8">
         <div className="container mx-auto px-6 text-center">
           <p className="text-gray-300">
-            © 2025 Your Name. Made with ❤️ and lots of ☕
+            © 2025 Prateek Yadav. Made with ❤️ and lots of ☕
           </p>
           <p className="text-gray-400 text-sm mt-2">
             Crafted in the cosmic void of creativity
