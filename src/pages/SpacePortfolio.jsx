@@ -99,7 +99,7 @@ const SpacePortfolio = () => {
   // Updated skills with JavaScript added
   const skills = [
     "React", "Node.js", "Express.js", "MongoDB", 
-    "JavaScript", "Tailwind CSS", "Git & GitHub", "Python", "Java", "C++"
+    "JavaScript", "Tailwind CSS", "Git & GitHub", "Python", "C++"
   ];
 
   return (
@@ -324,14 +324,14 @@ const SpacePortfolio = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <p className="text-lg text-gray-200 leading-relaxed">
-                  I'm a <span className="text-violet-400 font-semibold">2nd year Computer Science Engineering student</span> with a passion for 
-                  <span className="text-pink-400 font-semibold"> web development</span>. Currently specializing in the 
+                  I'm a 2nd year Engineering student in <span className="text-violet-400 font-semibold">computer science</span> with a passion for 
+                  <span className="text-pink-400 font-semibold"> Web Development</span>. Currently specializing in the 
                   <span className="text-violet-400 font-semibold"> MERN stack</span>, I enjoy building full-stack applications that solve real-world problems.
                 </p>
                 <p className="text-lg text-gray-200 leading-relaxed">
                   My technical journey includes working with <span className="text-pink-400 font-semibold">MongoDB, Express.js, React, and Node.js</span>, along with 
-                  <span className="text-violet-400 font-semibold"> Python and various libraries</span>. I'm also in the 
-                  <span className="text-pink-400 font-semibold"> starting phase of mastering C++ and Data Structures & Algorithms</span>, 
+                  <span className="text-violet-400 font-semibold"> Python and various libraries</span>. I'm also in the starting phase of
+                  <span className="text-pink-400 font-semibold">  C++ and Data Structures & Algorithms</span>, 
                   continuously expanding my problem-solving skills and technical foundation.
                 </p>
               </div>
