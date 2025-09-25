@@ -182,7 +182,7 @@ const SpacePortfolio = () => {
       image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
       imageAlt: "Smart India Hackathon civic complaint management system",
       skills: ["MERN Stack", "Google Maps API", "3d-Models"],
-      github: "https://github.com/JanConnect/",
+      github: "",
       demo: null // No demo link available - button will be hidden
     },
     
