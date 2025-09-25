@@ -175,16 +175,16 @@ const SpacePortfolio = () => {
 
   // Updated projects with conditional demo links
   const projects = [
-    {
-      id: 2,
-      title: "Smart India Hackathon Project",
-      description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
-      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
-      imageAlt: "Smart India Hackathon civic complaint management system",
-      skills: ["MERN Stack", "Google Maps API", "3d-Models"],
-      github: "",
-      demo: null // No demo link available - button will be hidden
-    },
+    // {
+    //   id: 2,
+    //   title: "Smart India Hackathon Project",
+    //   description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
+    //   image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
+    //   imageAlt: "Smart India Hackathon civic complaint management system",
+    //   skills: ["MERN Stack", "Google Maps API", "3d-Models"],
+    //   github: "",
+    //   demo: null // No demo link available - button will be hidden
+    // },
     
     {
       id: 1,
