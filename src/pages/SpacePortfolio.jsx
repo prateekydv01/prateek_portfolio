@@ -6,7 +6,6 @@ const SpacePortfolio = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imageErrors, setImageErrors] = useState({});
 
-  // Contact form state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,12 +21,10 @@ const SpacePortfolio = () => {
 
   const [formErrors, setFormErrors] = useState({});
 
-  // Image error handler
   const handleImageError = (projectId) => {
     setImageErrors(prev => ({ ...prev, [projectId]: true }));
   };
 
-  // Helper function to check if demo link is valid
   const isValidDemoLink = (demoUrl) => {
     return demoUrl && 
            demoUrl.trim() !== '' && 
@@ -36,7 +33,6 @@ const SpacePortfolio = () => {
            demoUrl.startsWith('http');
   };
 
-  // Enhanced stars animation effect with reduced opacity
   const generateStars = () => {
     const stars = [];
     for (let i = 0; i < 150; i++) {
@@ -58,7 +54,6 @@ const SpacePortfolio = () => {
     return stars;
   };
 
-  // Fixed scroll-based section highlighting
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'projects', 'contact'];
@@ -87,7 +82,7 @@ const SpacePortfolio = () => {
     setMobileMenuOpen(false);
   };
 
-  // Contact form handlers
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -173,39 +168,38 @@ const SpacePortfolio = () => {
     }
   };
 
-  // Updated projects with conditional demo links
   const projects = [
     {
       id: 2,
-      title: "Smart India Hackathon Project",
+      title: "Janconnect",
       description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
       image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
       imageAlt: "Smart India Hackathon civic complaint management system",
       skills: ["MERN Stack", "Google Maps API", "3d-Models"],
       github: "",
-      demo: null // No demo link available - button will be hidden
+      demo: "https://jan-connect-kappa.vercel.app"
+    },
+    {
+      id: 1,
+      title: "RizeUp",
+      description: "Productivity and habit-building platform with personal and group goals, peer verification, proof-based tracking, leaderboards, and progress analytics.",
+      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1775579762/wckdsczzqjmikvzeyeqd.png",
+      imageAlt: "RizeUp",
+      skills: ["React JS","Express JS", "MongoDB", "NodeJs", "GoogleAPI(calander+auth)"],
+      github: "",
+      demo: "https://rizeup-prateek.vercel.app"
     },
     
     {
-      id: 1,
+      id: 3,
       title: "Blog Posting Platform",
       description: "Developed a blog posting web application using the MERN stack with full CRUD functionality. Implemented features to create, update, and manage posts with active/inactive status for better content control",
       image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752133/bmmcvvmmf1exerkjyl1o.png",
       imageAlt: "Blog posting platform screenshot showing the main interface",
       skills: ["React", "Node.js", "MongoDB", "Express"],
       github: "https://github.com/prateekydv01/blogsite",
-      demo: "https://blogsite-frontend-9wke.vercel.app/" // Valid demo link
+      demo: "https://blogsite-frontend-9wke.vercel.app/" 
     },
-    {
-      id: 3,
-      title: "8 Mini JS projects",
-      description: "Built 8 projects with HTML, CSS & JavaScript to strengthen DOM manipulation and JavaScript fundamentals, including calculator, todo app, weather app, cart, banner, tracker, text counter, and food order",
-      image: "/images/projects/bl",
-      imageAlt: "Blog posting platform screenshot showing the main interface",
-      skills: ["HTML", "CSS", "JavaScript"],
-      github: "https://github.com/prateekydv01/mini-javascript-projects",
-    },
-    
     
   ];
 
