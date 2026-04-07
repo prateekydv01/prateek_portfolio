@@ -169,16 +169,7 @@ const SpacePortfolio = () => {
   };
 
   const projects = [
-    {
-      id: 2,
-      title: "Janconnect",
-      description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
-      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
-      imageAlt: "Smart India Hackathon civic complaint management system",
-      skills: ["MERN Stack", "Google Maps API", "3d-Models"],
-      github: "",
-      demo: "https://jan-connect-kappa.vercel.app"
-    },
+
     {
       id: 1,
       title: "RizeUp",
@@ -188,6 +179,18 @@ const SpacePortfolio = () => {
       skills: ["React JS","Express JS", "MongoDB", "NodeJs", "GoogleAPI(calander+auth)"],
       github: "",
       demo: "https://rizeup-prateek.vercel.app"
+    },
+    
+    {
+      
+      id: 2,
+      title: "Janconnect",
+      description: "Civic complaint management system with admin dashboards, municipality management, complaint tracking, and location-based services. Features user authentication, file uploads, and priority systems.",
+      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
+      imageAlt: "Smart India Hackathon civic complaint management system",
+      skills: ["MERN Stack", "Google Maps API", "3d-Models"],
+      github: "",
+      demo: "https://jan-connect-kappa.vercel.app"
     },
     
     {
