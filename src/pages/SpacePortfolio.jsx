@@ -392,7 +392,7 @@ const SpacePortfolio = () => {
               <div className="mb-8">
                 <p className="text-sm text-gray-200 mb-3">Specializing in</p>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript'].map((tech, index) => (
+                  {['NextJS', 'MERN Stack' , 'Typesript' ,'Django'].map((tech, index) => (
                     <span 
                       key={tech} 
                       className="px-3 py-1 text-xs bg-gradient-to-r from-violet-600/20 to-pink-600/20 rounded-full border border-violet-400/30 text-violet-300"
