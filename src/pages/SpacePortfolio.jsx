@@ -198,7 +198,7 @@ const SpacePortfolio = () => {
       id: 3,
       title: "Baat Karo",
       description: "Built a real-time messaging platform using Socket.IO, enabling instant one-to-one communication between users. Implemented features such as friend requests, typing indicators, online/offline status tracking, and live last-seen updates. Developed a secure full-stack architecture",
-      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
+      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1780956174/kxnzy5qlsersiun8rio7.png",
       imageAlt: "Baat Karo",
       skills: ["MERN Stack", "SOCKET.IO", "react-toast"],
       github: "",
