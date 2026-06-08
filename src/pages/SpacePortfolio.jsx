@@ -219,8 +219,7 @@ const SpacePortfolio = () => {
   ];
 
   const skills = [
-    "React", "Node.js", "Express.js", "MongoDB", 
-    "JavaScript", "Tailwind CSS", "Git & GitHub", "Python", "C++"
+    "NextJS" , "React" ,"Tailwind CSS", "Express JS" , "NodeJS", "Django" ,"PostgreseSQL"," MongoDB", "Prisma" ,"Typescript" ,"Javascript","C++" , "Python" ,"Git & Github", "AWS"
   ];
 
   return (
@@ -445,44 +444,64 @@ const SpacePortfolio = () => {
 
         {/* About Section - Adjusted text colors */}
         <section id="about" className="min-h-screen py-20 px-6">
-          <div className="container mx-auto max-w-6xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-              About Me
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <p className="text-lg text-gray-200 leading-relaxed">
-                  I'm a 2nd year Engineering student in <span className="text-violet-400 font-semibold">computer science</span> with a passion for 
-                  <span className="text-pink-400 font-semibold"> Web Development</span>. Currently specializing in the 
-                  <span className="text-violet-400 font-semibold"> MERN stack</span>, I enjoy building full-stack applications that solve real-world problems.
-                </p>
-                <p className="text-lg text-gray-200 leading-relaxed">
-                  My technical journey includes working with <span className="text-pink-400 font-semibold">MongoDB, Express.js, React, and Node.js</span>, along with 
-                  <span className="text-violet-400 font-semibold"> Python and various libraries</span>. I'm also in the starting phase of
-                  <span className="text-pink-400 font-semibold">  C++ and Data Structures & Algorithms</span>, 
-                  continuously expanding my problem-solving skills and technical foundation.
-                </p>
-              </div>
+  <div className="container mx-auto max-w-6xl">
+    <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+      About Me
+    </h2>
 
-              <div>
-                <h3 className="text-2xl font-semibold mb-6 text-center text-gray-100">Skills & Technologies</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {skills.map((skill, index) => (
-                    <div
-                      key={skill}
-                      className="px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600/20 to-pink-600/20 backdrop-blur-sm text-center transition-all duration-300 hover:scale-110 hover:from-violet-500/30 hover:to-pink-500/30 hover:shadow-lg hover:shadow-purple-500/25 cursor-pointer"
-                    >
-                      <span className="text-sm font-medium text-gray-100">
-                        {skill}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="space-y-6">
+        <p className="text-lg text-gray-200 leading-relaxed">
+          I'm a{" "}
+          <span className="text-violet-400 font-semibold">
+            3rd-year B.Tech Computer Science student
+          </span>{" "}
+          and a{" "}
+          <span className="text-pink-400 font-semibold">
+            Full-Stack Developer
+          </span>{" "}
+          passionate about building modern, scalable, and user-friendly web
+          applications. My expertise includes{" "}
+          <span className="text-violet-400 font-semibold">
+            Next.js, MERN Stack, Django, and TypeScript
+          </span>
+          , allowing me to create complete end-to-end solutions from frontend
+          interfaces to backend systems.
+        </p>
+
+        <p className="text-lg text-gray-200 leading-relaxed">
+          Alongside web development, I have
+          solved{" "}
+          <span className="text-pink-400 font-semibold">
+            200+ Data Structures & Algorithms problems on LeetCode
+          </span>
+          , strengthening my problem-solving abilities and understanding of
+          core computer science concepts. I am always eager to learn new
+          technologies, take on challenging projects, and contribute to
+          innovative solutions.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-semibold mb-6 text-center text-gray-100">
+          Skills & Technologies
+        </h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {skills.map((skill, index) => (
+            <div
+              key={skill}
+              className="px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600/20 to-pink-600/20 backdrop-blur-sm text-center transition-all duration-300 hover:scale-110 hover:from-violet-500/30 hover:to-pink-500/30 hover:shadow-lg hover:shadow-purple-500/25 cursor-pointer"
+            >
+              <span className="text-sm font-medium text-gray-100">
+                {skill}
+              </span>
             </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* Projects Section - Updated with conditional demo button rendering */}
         <section id="projects" className="min-h-screen py-20 px-6">
