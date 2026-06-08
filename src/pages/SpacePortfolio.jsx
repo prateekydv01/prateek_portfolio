@@ -180,7 +180,7 @@ const SpacePortfolio = () => {
       github: "",
       demo: "https://rizeup-prateek.vercel.app"
     },
-    
+  
     {
       
       id: 2,
@@ -194,7 +194,19 @@ const SpacePortfolio = () => {
     },
     
     {
+      
       id: 3,
+      title: "Baat Karo",
+      description: "Built a real-time messaging platform using Socket.IO, enabling instant one-to-one communication between users. Implemented features such as friend requests, typing indicators, online/offline status tracking, and live last-seen updates. Developed a secure full-stack architecture",
+      image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752239/cjw5w2hu5l9b1p0os9sj.png",
+      imageAlt: "Baat Karo",
+      skills: ["MERN Stack", "SOCKET.IO", "react-toast"],
+      github: "",
+      demo: "https://baatkaro-prateek.vercel.app"
+    },
+    
+    {
+      id: 4,
       title: "Blog Posting Platform",
       description: "Developed a blog posting web application using the MERN stack with full CRUD functionality. Implemented features to create, update, and manage posts with active/inactive status for better content control",
       image: "http://res.cloudinary.com/dxeri7eq3/image/upload/v1758752133/bmmcvvmmf1exerkjyl1o.png",
