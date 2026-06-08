@@ -329,7 +329,8 @@ const SpacePortfolio = () => {
                 </button>
               ))}
               <a
-                href="#"
+                href="https://drive.google.com/file/d/1LzJKwkPpp5gk45ljbIoi-9gEPn3yx8j2/view?usp=sharing"
+                target="_blank"
                 className="px-6 py-2 bg-gradient-to-r from-violet-600 to-pink-600 rounded-full hover:from-violet-700 hover:to-pink-700 transition-all duration-300 font-medium shadow-lg text-white"
               >
                 Resume
@@ -358,7 +359,8 @@ const SpacePortfolio = () => {
                 </button>
               ))}
               <a
-                href="#"
+                href="https://drive.google.com/file/d/1LzJKwkPpp5gk45ljbIoi-9gEPn3yx8j2/view?usp=sharing"
+                target="_blank"
                 className="inline-block px-6 py-2 bg-gradient-to-r from-violet-600 to-pink-600 rounded-full hover:from-violet-700 hover:to-pink-700 transition-all duration-300 font-medium text-white"
               >
                 Resume
